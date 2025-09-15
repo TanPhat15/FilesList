@@ -8,4 +8,6 @@ Lưu ý : Vì project  sử dụng 1 thư mục có sẵn trong máy tính nên 
 
 Run project : npm run start   ( Chạy cùng lúc Angurlar(frontend) và Electron(server))
     -- Hoặc chạy 2 terminal : ng serve và npm run start nếu muốn thay đổi code trong file main.js
+
+
 Lưu ý : Khi mới run project nếu chưa có dữ liệu , cần đợi 1 lúc để server khởi động ( nhấn F5 để tải lại trang)
