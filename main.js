@@ -13,7 +13,7 @@ const API_PORT = 3000;
 
   api.use(cors());
 
-  function getChild(folderPathChild) {
+  function getChild(folderPathChild , folderPath) {
     const files = fs.readdirSync(folderPathChild);
   
     const fileList = files.map(name => {
@@ -22,16 +22,18 @@ const API_PORT = 3000;
   
       const isFolder = stats.isDirectory();
       const type = isFolder ? "folder" : (path.extname(name).replace('.', '') || 'file');
-  
+      const relativePath = path.relative(folderPath, filePath).replace(/\\/g, '/');
+
       return {
         label: name,  
         data: {
           name,
           created: stats.birthtime.toLocaleString(),
           type,
-          size: isFolder ? null : (stats.size / 1024).toFixed(1) + ' KB'
+          size: isFolder ? null : (stats.size / 1024).toFixed(1) + ' KB',
+          fullPath: relativePath
         },
-        children: isFolder ? getChild(filePath) : []  ,
+        children: isFolder ? getChild(filePath, folderPath) : []  ,
         leaf: !isFolder,
     };
     });
@@ -46,14 +48,14 @@ const API_PORT = 3000;
         return res.status(500).json({ error: 'Không đọc được thư mục' });
       }
     
-      const result = await getChild(folderPath);
+      const result = await getChild(folderPath , folderPath);
       res.json(result);
     }
   );
 })
 
 api.get('/files/download/*', (req, res) => {
-  const relativePath = req.params[0]; // lấy full path tương đối
+  const relativePath = decodeURIComponent(req.params[0]); // lấy full path tương đối
   const filePathDow = path.join(folderPath, relativePath);
   res.download(filePathDow);
 });

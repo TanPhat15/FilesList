@@ -28,8 +28,8 @@ export class FileService {
     });
   }
 
-  downloadFile(relativePath: string): Observable<Blob> {
-    return this.http.get(`http://localhost:3000/files/download/${relativePath}`, {
+  downloadFile(filePath: string): Observable<Blob> {
+    return this.http.get(`http://localhost:3000/files/download/${encodeURIComponent(filePath)}`, {
       responseType: 'blob'
     });
   }

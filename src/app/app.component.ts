@@ -41,15 +41,21 @@ export class AppComponent implements OnInit {
      this.fileService.loadFolder();
   }
 
-  download(filePath: string) {
-    const confirmDownload = window.confirm(`Bạn có muốn tải file "${filePath}" không?`);
+  download(file : any) {
+    console.log(file);
+    if (!file || !file.data) {
+      console.error('File không hợp lệ:', file);
+      return;
+    }
+    const filePath = file.data.fullPath;
+    const confirmDownload = window.confirm(`Bạn có muốn tải file "${file.data.name}" không?`);
     if (!confirmDownload) return;
   
     this.fileService.downloadFile(filePath).subscribe((blob) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = filePath.split('/').pop()!; // chỉ lấy tên cuối
+      a.download = file.data.name;
       a.click();
       window.URL.revokeObjectURL(url);
     });

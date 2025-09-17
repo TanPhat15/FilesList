@@ -32,7 +32,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let file of displayedFiles ; let i = index"  (click)="file.leaf && download(file.data.name)">
+      <tr *ngFor="let file of displayedFiles ; let i = index"  (click)="file.leaf && download(file)">
         <td>{{ i + 1 }}</td>
         <td>{{ file.data.name }}</td>
         <td>{{ file.data.created }}</td>
