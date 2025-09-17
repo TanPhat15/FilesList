@@ -2,14 +2,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TreeNode } from 'primeng/api';
+import { TreeModule } from 'primeng/tree';
 import { Observable } from 'rxjs';
-import { AppFile, FileService } from './file.service';
+import { FileService } from './file.service';
 
 @Component({
 
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule ,HttpClientModule],
+  imports: [CommonModule, FormsModule ,HttpClientModule,TreeModule],
   templateUrl:'./app.component.html',
   styleUrls: ['./app.component.css'] ,
   providers: [FileService]
@@ -17,10 +19,14 @@ import { AppFile, FileService } from './file.service';
 })
 export class AppComponent implements OnInit {
 
-  files: AppFile[] = [];
-  files$!: Observable<AppFile[]>;
-  displayedFiles: AppFile[] = [];
+  files: TreeNode[] = [];
+  files$!: Observable<TreeNode[]>;
+  displayedFiles: TreeNode[] = [];
   keyword = '';
+  selectedFile!: TreeNode;
+
+
+  
 
   constructor(private fileService: FileService) {
   }
@@ -34,30 +40,54 @@ export class AppComponent implements OnInit {
 
      this.fileService.loadFolder();
   }
+
+  download(filePath: string) {
+    const confirmDownload = window.confirm(`Bạn có muốn tải file "${filePath}" không?`);
+    if (!confirmDownload) return;
+  
+    this.fileService.downloadFile(filePath).subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filePath.split('/').pop()!; // chỉ lấy tên cuối
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+  
+  onNodeSelect(event: any) {
+    const node = event.node;
+  
+    if (node.children && node.children.length > 0) {
+      node.expanded = true;
+      this.displayedFiles = node.children;
+      console.log(this.displayedFiles);
+    }
+    else if (node.leaf) {
+      // this.displayedFiles = [node];
+      // console.log(this.displayedFiles);
+    }
+  }
+  getAllNodes(nodes: any[]): any[] {
+    let result: any[] = [];
+    for (let node of nodes) {
+      result.push(node);
+      if (node.children && node.children.length > 0) {
+        result = result.concat(this.getAllNodes(node.children));
+      }
+    }
+    return result;
+  }
+  
   search() {
     if (!this.keyword) {
       this.displayedFiles = this.files;
       console.log(this.displayedFiles);
     } else {
-      this.displayedFiles = this.files.filter(f =>
-        f.name.toLowerCase().includes(this.keyword.toLowerCase())
+      const allNodes = this.getAllNodes(this.files);
+      this.displayedFiles = allNodes.filter(f =>
+        f.data.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     }
-  }
-
-  download(fileName: string) {
-    const confirmDownload = window.confirm(`Bạn có muốn tải file "${fileName}" không?`);
-    if (!confirmDownload) {
-      return;
-    }
-
-    this.fileService.downloadFile(fileName).subscribe((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName; 
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
   }
 }

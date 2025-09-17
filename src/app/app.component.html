@@ -4,7 +4,24 @@
     <input [(ngModel)]="keyword" placeholder="Tìm kiếm file..." />
     <button (click)="search()">Tìm kiếm</button>
   </div>
+<div class="content">
 
+  <div class="left-panel">
+    <h3>Cây thư mục</h3>
+    <p-tree
+      [value]="files"
+      selectionMode="single"
+      [(selection)]="selectedFile"
+      (onNodeSelect)="onNodeSelect($event)"
+      [propagateSelectionUp]="false"
+      [propagateSelectionDown]="false"
+    >
+      <!-- <ng-template let-node pTemplate="default">
+        <span>{{ node.label }}</span>
+      </ng-template> -->
+    </p-tree>
+  </div>
+  <div class="right-panel">
   <table class="file-table">
     <thead>
       <tr>
@@ -15,12 +32,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let file of displayedFiles ; let i = index"  (click)="download(file.name)">
+      <tr *ngFor="let file of displayedFiles ; let i = index"  (click)="file.leaf && download(file.data.name)">
         <td>{{ i + 1 }}</td>
-        <td>{{ file.name }}</td>
-        <td>{{ file.created }}</td>
-        <td>{{ file.size }}</td>
+        <td>{{ file.data.name }}</td>
+        <td>{{ file.data.created }}</td>
+        <td>{{ file.data.size }}</td>
       </tr>
     </tbody>
   </table>
+  </div>
+</div>
 </div>

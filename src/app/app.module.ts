@@ -7,6 +7,8 @@ import { routes } from './app.routes';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableModule } from 'primeng/table';
+import { TreeModule } from 'primeng/tree';
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         BrowserAnimationsModule,
         MatDialogModule,
         MatButtonModule , 
+        TreeModule,
+        TableModule
 ],
     providers: [],
     bootstrap: [AppComponent]
