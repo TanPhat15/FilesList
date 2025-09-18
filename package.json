@@ -28,6 +28,7 @@
     "@angular/router": "^19.2.0",
     "@primeng/themes": "^20.1.2",
     "express": "^4.21.2",
+    "ngx-pagination": "^6.0.3",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.1.4",

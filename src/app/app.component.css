@@ -27,6 +27,14 @@
     margin-bottom: 0;
     padding-bottom: 0; 
   }
+  .pagination li a, 
+  .pagination li span {
+    color: white !important;  /* chữ màu trắng */
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 5px;
+    text-decoration: none;
+}
   
   h2 {
     font-size: 18px;

@@ -7,6 +7,7 @@ import { routes } from './app.routes';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { TableModule } from 'primeng/table';
 import { TreeModule } from 'primeng/tree';
 
@@ -23,7 +24,8 @@ import { TreeModule } from 'primeng/tree';
         MatDialogModule,
         MatButtonModule , 
         TreeModule,
-        TableModule
+        TableModule,
+        NgxPaginationModule,
 ],
     providers: [],
     bootstrap: [AppComponent]

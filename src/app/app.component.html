@@ -17,6 +17,7 @@
       (onNodeSelect)="onNodeSelect($event)"
       [propagateSelectionUp]="false"
       [propagateSelectionDown]="false"
+      scrollHeight="400px" [virtualScroll]="false" [virtualScrollItemSize]="46"
     >
     </p-tree>
   </div>
@@ -26,19 +27,27 @@
       <tr>
         <th>STT</th>
         <th>Tên file</th>
+        <th>Đường dẫn</th>
         <th>Ngày tạo</th>
         <th>Dung lượng</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let file of displayedFiles ; let i = index"  (click)="file.leaf && download(file)">
+      <tr *ngFor="let file of displayedFiles | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"  
+          (click)="file.leaf && download(file)">
         <td>{{ i + 1 }}</td>
         <td>{{ file.data.name }}</td>
+        <td>{{ file.data.fullPath }}</td>
         <td>{{ file.data.created }}</td>
         <td>{{ file.data.size }}</td>
       </tr>
     </tbody>
   </table>
+
+  <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
   </div>
 </div>
 </div>
+
+<!-- [virtualScroll]="true" 
+      [virtualScrollItemSize]="46" -->

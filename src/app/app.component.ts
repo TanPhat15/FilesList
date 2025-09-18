@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { TreeNode } from 'primeng/api';
 import { TreeModule } from 'primeng/tree';
 import { Observable } from 'rxjs';
@@ -11,7 +12,7 @@ import { FileService } from './file.service';
 
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule ,HttpClientModule,TreeModule],
+  imports: [CommonModule, FormsModule ,HttpClientModule,TreeModule,NgxPaginationModule],
   templateUrl:'./app.component.html',
   styleUrls: ['./app.component.css'] ,
   providers: [FileService]
@@ -24,6 +25,8 @@ export class AppComponent implements OnInit {
   displayedFiles: TreeNode[] = [];
   keyword = '';
   selectedFile!: TreeNode;
+
+  p: number = 1;
 
   constructor(private fileService: FileService) {
   }
@@ -40,6 +43,10 @@ export class AppComponent implements OnInit {
 
   gohome(){
     this.ngOnInit();
+  }
+
+  onPageChange(event: any) {
+    this.p = Number(event); // ép kiểu sang number
   }
 
   download(file : any) {
