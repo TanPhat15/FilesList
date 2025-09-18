@@ -8,6 +8,7 @@ const API_PORT = 3000;
 
   const api = express() ;
   const folderPath = "D:/New folder" ;
+   // "D:/DACN/CNPM"
 
   api.use(cors());
 
@@ -20,7 +21,8 @@ const API_PORT = 3000;
   
       const isFolder = stats.isDirectory();
       const type = isFolder ? "folder" : (path.extname(name).replace('.', '') || 'file');
-      const relativePath = path.relative(folderPath, filePath).replace(/\\/g, '/');
+      const relativePath = path.join(folderPath, path.relative(folderPath, filePath)).replace(/\\/g, '/');
+      // path.relative(folderPath, filePath).replace(/\\/g, '/');
 
       return {
         label: name,
