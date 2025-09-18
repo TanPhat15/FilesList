@@ -1,23 +1,29 @@
   .content {
     display: flex;
     gap: 20px;
+    align-items: flex-start;
   }
+  .search-box-1 {
+    display: flex;
+    justify-content: flex-end;
+    /* align-items: center; */              
+  }
+  
   .left-panel {
-    flex: 1;
-    max-width: 200px;
     color: white;
     overflow-y: auto;
+    height: 100%;
   }
   
   .right-panel {
-    flex: 3; /* Cột phải to hơn để chứa bảng */
+    flex: 3;
   }
   .container {
+    height: 100%;
     background: #161b22;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    flex: 1; 
     margin-bottom: 0;
     padding-bottom: 0; 
   }
@@ -30,6 +36,7 @@
   }
   
   input {
+    height: 30px;
     width: 280px;
     padding: 8px 12px;
     font-size: 14px;
@@ -40,6 +47,7 @@
     margin-bottom: 15px;
   }
   button {
+    height: 30px;
     padding: 8px 12px;
     color: #e6edf3;
     background-color: #0d1117;

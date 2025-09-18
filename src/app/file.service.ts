@@ -3,13 +3,6 @@ import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-// export interface AppFile {
-//   name: string;
-//   created: string;
-//   type:string;
-//   size: string;
-// }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -33,10 +26,4 @@ export class FileService {
       responseType: 'blob'
     });
   }
-
-  // downloadFile(fileName: string) {
-  //   return this.http.get(`http://localhost:3000/files/download/${fileName}`, {
-  //     responseType: 'blob' // nhận về dạng nhị phân
-  //   });
-  // }
 }

@@ -25,9 +25,6 @@ export class AppComponent implements OnInit {
   keyword = '';
   selectedFile!: TreeNode;
 
-
-  
-
   constructor(private fileService: FileService) {
   }
 
@@ -41,8 +38,11 @@ export class AppComponent implements OnInit {
      this.fileService.loadFolder();
   }
 
+  gohome(){
+    this.ngOnInit();
+  }
+
   download(file : any) {
-    console.log(file);
     if (!file || !file.data) {
       console.error('File không hợp lệ:', file);
       return;
@@ -67,11 +67,10 @@ export class AppComponent implements OnInit {
     if (node.children && node.children.length > 0) {
       node.expanded = true;
       this.displayedFiles = node.children;
-      console.log(this.displayedFiles);
+      // console.log(this.displayedFiles);
     }
     else if (node.leaf) {
-      // this.displayedFiles = [node];
-      // console.log(this.displayedFiles);
+      this.download(node)
     }
   }
   getAllNodes(nodes: any[]): any[] {
@@ -88,12 +87,13 @@ export class AppComponent implements OnInit {
   search() {
     if (!this.keyword) {
       this.displayedFiles = this.files;
-      console.log(this.displayedFiles);
+      // console.log(this.displayedFiles);
     } else {
       const allNodes = this.getAllNodes(this.files);
       this.displayedFiles = allNodes.filter(f =>
         f.data.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
+      this.keyword = ''
     }
   }
 }

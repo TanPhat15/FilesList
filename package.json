@@ -7,11 +7,12 @@
     "ng:serve": "ng serve",
     "build": "ng build",
     "electron:serve": "ng build && electron .",
-    "start": "concurrently \"npm run ng:serve\" \"npm run electron:serve\"",
+    "start": "npm run setup && concurrently \"npm run ng:serve\"",
     "electron": "electron .",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:file-viewer": "node dist/file-viewer/server/server.mjs"
+    "serve:ssr:file-viewer": "node dist/file-viewer/server/server.mjs",
+    "setup": "npm install && npm install primeicons primeng @primeng/themes primeflex concurrently"
   },
   "private": true,
   "dependencies": {
@@ -25,9 +26,11 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/platform-server": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@primeng/themes": "^20.1.2",
     "express": "^4.21.2",
+    "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
-    "primeng": "^19.0.9",
+    "primeng": "^19.1.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
